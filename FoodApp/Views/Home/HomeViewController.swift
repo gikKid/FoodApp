@@ -6,10 +6,12 @@ final class HomeViewController:UIViewController {
     lazy var viewModel = {
        HomeViewModel()
     }()
+    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        self.initViewModel()
     }
     
     //MARK: - Setup view
@@ -65,9 +67,15 @@ final class HomeViewController:UIViewController {
         }()
         self.view.addSubview(topLabel)
         
-//        self.collectionView.dataSource = self
-//        self.collectionView.delegate = self
-//        self.view.addSubview(collectionView)
+        let collectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        collectionViewFlowLayout.scrollDirection = .horizontal
+        self.collectionView.setCollectionViewLayout(collectionViewFlowLayout, animated: false)
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.backgroundColor = .clear
+        self.collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identefier)
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.view.addSubview(collectionView)
     
         
         NSLayoutConstraint.activate([
@@ -86,11 +94,20 @@ final class HomeViewController:UIViewController {
             topLabel.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 40),
             topLabel.leftAnchor.constraint(equalTo: menuButton.leftAnchor),
             topLabel.widthAnchor.constraint(equalToConstant: 250),
-//            collectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
-//            collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
-//            collectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-//            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
+            collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
+            collectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func initViewModel() {
+        self.viewModel.getCategories()
+        self.viewModel.reloadCollectionView = {[weak self]  in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
     
@@ -99,5 +116,32 @@ final class HomeViewController:UIViewController {
         
     }
 
+    
+}
+
+//MARK: - Collection view methods
+extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+         self.viewModel.categoryCellViewModels.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identefier, for: indexPath) as? CategoryCollectionViewCell else {
+            fatalError()
+        }
+        let cellViewModel = self.viewModel.getCategoryCellViewModel(at: indexPath)
+        cell.cellViewModel = cellViewModel
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 50, height: 50)
+    }
+    
     
 }

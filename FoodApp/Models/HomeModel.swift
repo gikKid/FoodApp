@@ -1,11 +1,8 @@
 import Foundation
 
-struct Categories:Decodable {
-    let categories:[Category]
-}
-
 // MARK: - Category
-struct Category: Decodable {
+struct Category:Decodable {
+
     let strCategory: String
     let image: String
     
@@ -14,6 +11,7 @@ struct Category: Decodable {
         case strCategory
     }
 }
+
 
 struct Meals:Decodable {
     let meals:[Meal]
@@ -29,4 +27,9 @@ struct Meal: Decodable {
         case image = "strMealThumb"
         case strMeal
     }
+}
+
+//MARK: - Wrapper
+struct WrapperCategories<T:Decodable>: Decodable {
+    let categories: [T]
 }

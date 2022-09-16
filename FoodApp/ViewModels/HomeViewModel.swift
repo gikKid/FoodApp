@@ -6,9 +6,8 @@ struct CategoryCellViewModel {
 }
 
 class HomeViewModel: NSObject {
-    private var networkManager: NetworkManagerProtocol
     var reloadCollectionView: (() -> Void)?
-    var categories = Categories(categories: [])
+    var categories = [Category]()
     var categoryCellViewModels = [CategoryCellViewModel]() {
         didSet {
             reloadCollectionView?()
@@ -16,32 +15,27 @@ class HomeViewModel: NSObject {
     }
     
     
-    init(networkManager: NetworkManagerProtocol = NetworkManger.shared) {
-        self.networkManager = networkManager
-    }
-    
     func getCategories() {
         
-        networkManager.getCategories() { success, model, error in
-            
-            if success, let categories = model {
-                self.fetchCategoriesData(categories: categories)
-            }
-            else {
-                print(error!)
-            }
-        }
+        let categoryResource = CategoryResource()
+        
+        let  apiRequest = ApiCategoriesRequest(resource: categoryResource)
+
+        apiRequest.execute(withCompletion: {[weak self] (categories,error) in
+            guard let categories = categories else {return}
+            self?.fetchCategoriesData(categories: categories)
+        })
+        
     }
     
     
     
-    func fetchCategoriesData(categories: Categories) {
+    func fetchCategoriesData(categories: [Category]) {
         self.categories = categories // Cache
         
         var vms = [CategoryCellViewModel]()
         
-        for category in categories.categories {
-            
+        for category in categories {
             vms.append(createCategoryCellModel(category: category))
         }
         categoryCellViewModels = vms

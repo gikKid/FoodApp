@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  FoodApp
-//
-//  Created by MacBook Air 13 Retina 2018 on 15.09.2022.
-//  Copyright © 2022 MacBook Air 13 Retina 2018. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
