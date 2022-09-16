@@ -10,7 +10,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
             self.backgroundColor = isSelected ? UIColor(named: Constant.orangeColorName) : .white
         }
     }
-    var cellViewModel:CategoryCellViewModel?{
+    var cellViewModel:CellViewModel?{
         didSet{
             nameLabel.text = cellViewModel?.name
             guard let urlString = cellViewModel?.image else {return}

@@ -108,6 +108,7 @@ final class HomeViewController:UIViewController {
         self.viewModel.reloadCollectionView = {[weak self]  in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
+                self?.collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .centeredHorizontally)
             }
         }
     }
@@ -140,5 +141,8 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         self.viewModel.setupCategoryCellSize()
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.didSelectCategoryItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
+    }
     
 }

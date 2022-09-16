@@ -33,3 +33,7 @@ struct Meal: Decodable {
 struct WrapperCategories<T:Decodable>: Decodable {
     let categories: [T]
 }
+
+struct WrapperMeals<T:Decodable>:Decodable {
+    let meals:[T]
+}

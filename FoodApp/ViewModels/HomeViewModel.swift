@@ -1,17 +1,24 @@
 import Foundation
 import UIKit
 
-struct CategoryCellViewModel {
+struct CellViewModel {
     var name: String
     var image:String
 }
 
+
 final class HomeViewModel: NSObject {
     var reloadCollectionView: (() -> Void)?
     var categories = [Category]()
-    var categoryCellViewModels = [CategoryCellViewModel]() {
+    var meals = [Meal]()
+    var categoryCellViewModels = [CellViewModel]() {
         didSet {
             reloadCollectionView?()
+        }
+    }
+    var recommendedMealCellViewModels = [CellViewModel]() {
+        didSet {
+            //reloadCollectionView?()
         }
     }
     
@@ -19,6 +26,12 @@ final class HomeViewModel: NSObject {
     //MARK: - Category collection UI setup
     public func numberOfSections() -> Int {
         1
+    }
+    
+    public func didSelectCategoryItemAt(collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let meal = categoryCellViewModels[indexPath.row]
+        self.getRecommendedMeal(meal: meal.name)
+        
     }
     
     public func setupCategoryCell(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -46,26 +59,41 @@ final class HomeViewModel: NSObject {
         
     }
     
+    private func getRecommendedMeal(meal:String) {
+        let mealResource = MealResource(meal: meal)
+        
+        let apiRequest = ApiMealRequest(resource: mealResource)
+        apiRequest.execute(withCompletion: { meals, error in
+            guard let meals = meals else {return}
+            print(meals)
+            self.fetchMealsData(meals: meals)
+        })
+    }
+    
+    private func fetchMealsData(meals:[Meal]) {
+        self.meals = meals
+        var vms = [CellViewModel]()
+        
+        for meal in meals {
+            vms.append(CellViewModel(name: meal.strMeal, image: meal.image))
+        }
+        self.recommendedMealCellViewModels = vms
+    }
     
     
     private func fetchCategoriesData(categories: [Category]) {
         self.categories = categories // Cache
         
-        var vms = [CategoryCellViewModel]()
+        var vms = [CellViewModel]()
         
         for category in categories {
-            vms.append(createCategoryCellModel(category: category))
+            vms.append(CellViewModel(name: category.strCategory, image: category.image))
         }
         categoryCellViewModels = vms
     }
     
-    private func createCategoryCellModel(category: Category) -> CategoryCellViewModel {
-        let name = category.strCategory
-        let image = category.image
-        return CategoryCellViewModel(name: name, image: image)
-    }
     
-    private func getCategoryCellViewModel(at indexPath: IndexPath) -> CategoryCellViewModel {
+    private func getCategoryCellViewModel(at indexPath: IndexPath) -> CellViewModel {
         return categoryCellViewModels[indexPath.row]
     }
     
