@@ -1,6 +1,6 @@
 import Foundation
 
-class ApiCategoriesRequest<Resource:APIResource> {
+final class ApiCategoriesRequest<Resource:APIResource> {
     let resource:Resource
     
     init(resource:Resource) {

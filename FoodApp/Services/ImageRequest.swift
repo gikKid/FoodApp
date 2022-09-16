@@ -1,6 +1,6 @@
 import UIKit
 
-class ImageRequest {
+final class ImageRequest {
     let url: URL
 
     init(url:URL) {

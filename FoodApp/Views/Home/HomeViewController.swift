@@ -68,7 +68,7 @@ final class HomeViewController:UIViewController {
         self.view.addSubview(topLabel)
         
         let collectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        collectionViewFlowLayout.scrollDirection = .horizontal
+        collectionViewFlowLayout.scrollDirection = .vertical
         self.collectionView.setCollectionViewLayout(collectionViewFlowLayout, animated: false)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.backgroundColor = .clear
@@ -97,6 +97,8 @@ final class HomeViewController:UIViewController {
             collectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
             collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
             collectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+//            collectionView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+//            collectionView.heightAnchor.constraint(equalToConstant: self.view.frame.height - menuButton.frame.height - 40 - topLabel.frame.height),
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -123,24 +125,19 @@ final class HomeViewController:UIViewController {
 extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        self.viewModel.numberOfSections()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         self.viewModel.categoryCellViewModels.count
+        self.viewModel.categoryCellViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identefier, for: indexPath) as? CategoryCollectionViewCell else {
-            fatalError()
-        }
-        let cellViewModel = self.viewModel.getCategoryCellViewModel(at: indexPath)
-        cell.cellViewModel = cellViewModel
-        return cell
+        self.viewModel.setupCategoryCell(collectionView: collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 50, height: 50)
+        self.viewModel.setupCategoryCellSize()
     }
     
     
