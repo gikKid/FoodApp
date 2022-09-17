@@ -8,19 +8,21 @@ struct CellViewModel {
 
 
 final class HomeViewModel: NSObject {
-    var reloadCollectionView: (() -> Void)?
+    var reloadCetegoryCollectionView: (() -> Void)?
+    var reloadMealsCollectionView:(() -> Void)?
     var categories = [Category]()
     var meals = [Meal]()
     var categoryCellViewModels = [CellViewModel]() {
         didSet {
-            reloadCollectionView?()
+            reloadCetegoryCollectionView?()
         }
     }
     var recommendedMealCellViewModels = [CellViewModel]() {
         didSet {
-            //reloadCollectionView?()
+            reloadMealsCollectionView?()
         }
     }
+    
     
     
     //MARK: - Category collection UI setup
@@ -34,6 +36,10 @@ final class HomeViewModel: NSObject {
         
     }
     
+    public func didSelectMealItemAt(collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
     public func setupCategoryCell(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identefier, for: indexPath) as? CategoryCollectionViewCell else {
             fatalError()
@@ -43,12 +49,22 @@ final class HomeViewModel: NSObject {
         return cell
     }
     
+    public func setupMealCell(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMealCollectionViewCell.identefier, for: indexPath) as? RecommendedMealCollectionViewCell else {return UICollectionViewCell()}
+        let cellViewModel = self.getMealCellViewModel(at: indexPath)
+        cell.cellViewModel = cellViewModel
+        return cell
+    }
+    
     public func setupCategoryCellSize() -> CGSize {
         CGSize(width: 85, height: 115)
     }
     
+    public func setupMealCellSize() ->CGSize {
+        CGSize(width: 200, height: 300)
+    }
+    
     public func getCategories() {
-        
         let categoryResource = CategoryResource()
         
         let  apiRequest = ApiCategoriesRequest(resource: categoryResource)
@@ -65,7 +81,6 @@ final class HomeViewModel: NSObject {
         let apiRequest = ApiMealRequest(resource: mealResource)
         apiRequest.execute(withCompletion: { meals, error in
             guard let meals = meals else {return}
-            print(meals)
             self.fetchMealsData(meals: meals)
         })
     }
@@ -88,8 +103,12 @@ final class HomeViewModel: NSObject {
         
         for category in categories {
             vms.append(CellViewModel(name: category.strCategory, image: category.image))
+            
         }
-        categoryCellViewModels = vms
+        self.categoryCellViewModels = vms
+        
+        let firstMeal = self.categoryCellViewModels[0] // to show meal collection at starting app
+        self.getRecommendedMeal(meal: firstMeal.name)
     }
     
     
@@ -97,5 +116,8 @@ final class HomeViewModel: NSObject {
         return categoryCellViewModels[indexPath.row]
     }
     
+    private func getMealCellViewModel(at indexPath:IndexPath) -> CellViewModel {
+        return recommendedMealCellViewModels[indexPath.row]
+    }
     
 }

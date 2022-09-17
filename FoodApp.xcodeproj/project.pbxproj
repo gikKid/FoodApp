@@ -12,7 +12,6 @@
 		542FF73228D285DA00CE8486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 542FF73128D285DA00CE8486 /* Assets.xcassets */; };
 		542FF73528D285DA00CE8486 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 542FF73328D285DA00CE8486 /* LaunchScreen.storyboard */; };
 		542FF73D28D2864100CE8486 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF73C28D2864100CE8486 /* HomeModel.swift */; };
-		542FF73F28D2871400CE8486 /* HomeUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF73E28D2871400CE8486 /* HomeUIModel.swift */; };
 		542FF74128D2872200CE8486 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF74028D2872200CE8486 /* AppCoordinator.swift */; };
 		542FF74328D2874A00CE8486 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF74228D2874A00CE8486 /* RootTabBarController.swift */; };
 		542FF74528D2876700CE8486 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF74428D2876700CE8486 /* HomeViewController.swift */; };
@@ -27,6 +26,7 @@
 		54AAD03B28D39B200006FA95 /* ApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAD03A28D39B200006FA95 /* ApiResource.swift */; };
 		54AAFFF028D4BF35000A3E0D /* ApiMealRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAFFEF28D4BF35000A3E0D /* ApiMealRequest.swift */; };
 		54AAFFF228D4BF6F000A3E0D /* MealResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAFFF128D4BF6F000A3E0D /* MealResource.swift */; };
+		54AAFFF428D4F351000A3E0D /* RecommendedMealCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAFFF328D4F350000A3E0D /* RecommendedMealCollectionViewCell.swift */; };
 		54DD221628D293980014A26D /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DD221528D293980014A26D /* CategoryCollectionViewCell.swift */; };
 		54E5BAD128D3A29300ADFAF7 /* ApiCategoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E5BAD028D3A29300ADFAF7 /* ApiCategoriesRequest.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +39,6 @@
 		542FF73428D285DA00CE8486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		542FF73628D285DA00CE8486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		542FF73C28D2864100CE8486 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
-		542FF73E28D2871400CE8486 /* HomeUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUIModel.swift; sourceTree = "<group>"; };
 		542FF74028D2872200CE8486 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		542FF74228D2874A00CE8486 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
 		542FF74428D2876700CE8486 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		54AAD03A28D39B200006FA95 /* ApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResource.swift; sourceTree = "<group>"; };
 		54AAFFEF28D4BF35000A3E0D /* ApiMealRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiMealRequest.swift; sourceTree = "<group>"; };
 		54AAFFF128D4BF6F000A3E0D /* MealResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealResource.swift; sourceTree = "<group>"; };
+		54AAFFF328D4F350000A3E0D /* RecommendedMealCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedMealCollectionViewCell.swift; sourceTree = "<group>"; };
 		54DD221528D293980014A26D /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		54E5BAD028D3A29300ADFAF7 /* ApiCategoriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCategoriesRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +118,7 @@
 			children = (
 				542FF74428D2876700CE8486 /* HomeViewController.swift */,
 				54DD221528D293980014A26D /* CategoryCollectionViewCell.swift */,
+				54AAFFF328D4F350000A3E0D /* RecommendedMealCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -152,7 +153,6 @@
 				54AAD03828D39A7D0006FA95 /* CategoryResource.swift */,
 				54AAFFF128D4BF6F000A3E0D /* MealResource.swift */,
 				542FF73C28D2864100CE8486 /* HomeModel.swift */,
-				542FF73E28D2871400CE8486 /* HomeUIModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -269,7 +269,6 @@
 				542FF74128D2872200CE8486 /* AppCoordinator.swift in Sources */,
 				54AAD03728D3988A0006FA95 /* Constant.swift in Sources */,
 				542FF74328D2874A00CE8486 /* RootTabBarController.swift in Sources */,
-				542FF73F28D2871400CE8486 /* HomeUIModel.swift in Sources */,
 				542FF74928D287FC00CE8486 /* MapViewController.swift in Sources */,
 				5445118928D3ABBD00F2BCB1 /* ImageRequest.swift in Sources */,
 				54AAD03928D39A7D0006FA95 /* CategoryResource.swift in Sources */,
@@ -282,6 +281,7 @@
 				542FF72928D285D500CE8486 /* AppDelegate.swift in Sources */,
 				54E5BAD128D3A29300ADFAF7 /* ApiCategoriesRequest.swift in Sources */,
 				54AAFFF228D4BF6F000A3E0D /* MealResource.swift in Sources */,
+				54AAFFF428D4F351000A3E0D /* RecommendedMealCollectionViewCell.swift in Sources */,
 				54DD221628D293980014A26D /* CategoryCollectionViewCell.swift in Sources */,
 				54AAD03B28D39B200006FA95 /* ApiResource.swift in Sources */,
 				542FF72B28D285D500CE8486 /* SceneDelegate.swift in Sources */,

@@ -6,7 +6,8 @@ final class HomeViewController:UIViewController {
     lazy var viewModel = {
        HomeViewModel()
     }()
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var mealCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,15 +68,27 @@ final class HomeViewController:UIViewController {
         }()
         self.view.addSubview(topLabel)
         
-        let collectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        collectionViewFlowLayout.scrollDirection = .vertical
-        self.collectionView.setCollectionViewLayout(collectionViewFlowLayout, animated: false)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.backgroundColor = .clear
-        self.collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identefier)
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.view.addSubview(collectionView)
+        let categoryCollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        categoryCollectionViewFlowLayout.scrollDirection = .horizontal
+        self.categoryCollectionView.setCollectionViewLayout(categoryCollectionViewFlowLayout, animated: false)
+        self.categoryCollectionView.showsHorizontalScrollIndicator = false
+        self.categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.categoryCollectionView.backgroundColor = .clear
+        self.categoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identefier)
+        self.categoryCollectionView.dataSource = self
+        self.categoryCollectionView.delegate = self
+        self.view.addSubview(categoryCollectionView)
+        
+        let mealCollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        mealCollectionViewFlowLayout.scrollDirection = .horizontal
+        self.mealCollectionView.setCollectionViewLayout(mealCollectionViewFlowLayout, animated: false)
+        self.mealCollectionView.showsHorizontalScrollIndicator = false
+        self.mealCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.mealCollectionView.backgroundColor = .clear
+        self.mealCollectionView.register(RecommendedMealCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedMealCollectionViewCell.identefier)
+        self.mealCollectionView.dataSource = self
+        self.mealCollectionView.delegate = self
+        self.view.addSubview(mealCollectionView)
     
         
         NSLayoutConstraint.activate([
@@ -94,21 +107,29 @@ final class HomeViewController:UIViewController {
             topLabel.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 40),
             topLabel.leftAnchor.constraint(equalTo: menuButton.leftAnchor),
             topLabel.widthAnchor.constraint(equalToConstant: 250),
-            collectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
-            collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
-            collectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-//            collectionView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-//            collectionView.heightAnchor.constraint(equalToConstant: self.view.frame.height - menuButton.frame.height - 40 - topLabel.frame.height),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            categoryCollectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
+            categoryCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+            categoryCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
+            categoryCollectionView.heightAnchor.constraint(equalToConstant: 200),
+            mealCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor),
+            mealCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
+            mealCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+            mealCollectionView.bottomAnchor.constraint(equalTo:  self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     private func initViewModel() {
         self.viewModel.getCategories()
-        self.viewModel.reloadCollectionView = {[weak self]  in
+        self.viewModel.reloadCetegoryCollectionView = {[weak self]  in
             DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-                self?.collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+                self?.categoryCollectionView.reloadData()
+                self?.categoryCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+            }
+            
+        }
+        self.viewModel.reloadMealsCollectionView = {[weak self] in
+            DispatchQueue.main.async {
+                self?.mealCollectionView.reloadData()
             }
         }
     }
@@ -126,23 +147,53 @@ final class HomeViewController:UIViewController {
 extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        self.viewModel.numberOfSections()
+        return self.viewModel.numberOfSections()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.viewModel.categoryCellViewModels.count
+        switch collectionView {
+        case categoryCollectionView:
+            return self.viewModel.categoryCellViewModels.count
+        case mealCollectionView:
+            return self.viewModel.recommendedMealCellViewModels.count
+        default:
+            return 0
+        }
     }
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        self.viewModel.setupCategoryCell(collectionView: collectionView, cellForItemAt: indexPath)
+        switch collectionView {
+        case categoryCollectionView:
+            return self.viewModel.setupCategoryCell(collectionView: collectionView, cellForItemAt: indexPath)
+        case mealCollectionView:
+            return self.viewModel.setupMealCell(collectionView: collectionView, cellForItemAt: indexPath)
+        default:
+            return UICollectionViewCell()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        self.viewModel.setupCategoryCellSize()
+        switch collectionView {
+        case categoryCollectionView:
+            return self.viewModel.setupCategoryCellSize()
+        case mealCollectionView:
+            return self.viewModel.setupMealCellSize()
+        default:
+            return CGSize()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.viewModel.didSelectCategoryItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
-    }
-    
+        switch collectionView {
+        case categoryCollectionView:
+            self.viewModel.didSelectCategoryItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
+        case mealCollectionView:
+            self.viewModel.didSelectMealItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
+        default:
+            break
+        }
+  }
 }
+
