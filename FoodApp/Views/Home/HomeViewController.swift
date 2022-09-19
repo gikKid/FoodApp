@@ -108,32 +108,32 @@ final class HomeViewController:UIViewController {
         return UICollectionViewCompositionalLayout{ (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
             case 0:
-                return self.firstLayoutSection()
+                return self.categoriesLayoutSection()
             default:
-                return self.secondLayoutSection()
+                return self.recommendedMealsLayoutSection()
             }
         }
     }
     
-    private func firstLayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(0.85))
+    private func categoriesLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.23), heightDimension: .fractionalHeight(0.85))
          
          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 15)
+        item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
          
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.35))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(UIScreen.main.bounds.width), heightDimension: .fractionalWidth(0.35))
          
          let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         
          let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 0, leading: 0, bottom: 20, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 0)
          section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: categoryHeaderId, alignment: .topLeading)]
          return section
     }
     
-    private func secondLayoutSection() -> NSCollectionLayoutSection {
+    private func recommendedMealsLayoutSection() -> NSCollectionLayoutSection {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
          
@@ -146,6 +146,7 @@ final class HomeViewController:UIViewController {
          group.contentInsets = .init(top: 0, leading: 15, bottom: 0, trailing: 2)
         
          let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 0)
         section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: categoryHeaderId, alignment: .topLeading)]
          
          section.orthogonalScrollingBehavior = .continuous
