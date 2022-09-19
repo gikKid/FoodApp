@@ -35,8 +35,6 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
         addCartButton.backgroundColor = UIColor(named: Constant.orangeColorName)
         addCartButton.setImage(UIImage(named: "cartBlack"), for: .normal)
         addCartButton.translatesAutoresizingMaskIntoConstraints = false
-        addCartButton.layer.masksToBounds = true
-        addCartButton.layer.cornerRadius = addCartButton.frame.width / 2
         self.addSubview(addCartButton)
         
         NSLayoutConstraint.activate([
@@ -51,9 +49,10 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
             addCartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
             addCartButton.widthAnchor.constraint(equalToConstant: addCartButton.frame.width + 30),
             addCartButton.heightAnchor.constraint(equalToConstant: addCartButton.frame.width + 30)
-        
         ])
         
+        addCartButton.layer.masksToBounds = true
+        addCartButton.layer.cornerRadius = addCartButton.bounds.width / 2
     }
     
     required init?(coder: NSCoder) {
