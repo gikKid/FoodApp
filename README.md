@@ -1,2 +1,2 @@
-MVVM, Reusble network layer, composition layout
+MVVM, Reusable network layer, composition layout
 Now the project isnt finished...
