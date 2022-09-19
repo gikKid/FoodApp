@@ -127,7 +127,7 @@ final class HomeViewController:UIViewController {
         group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         
          let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 20, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 2, trailing: 0)
          section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: categoryHeaderId, alignment: .topLeading)]
          return section
@@ -138,7 +138,6 @@ final class HomeViewController:UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
          
          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-         //item.contentInsets.bottom = 15
          
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(1))
          
