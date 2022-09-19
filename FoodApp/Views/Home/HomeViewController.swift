@@ -6,8 +6,6 @@ final class HomeViewController:UIViewController {
     lazy var viewModel = {
        HomeViewModel()
     }()
-    private var categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    private var mealCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     let categoryHeaderId = "categoryHeaderId"
@@ -71,34 +69,8 @@ final class HomeViewController:UIViewController {
         }()
         self.view.addSubview(topLabel)
         
-        let categoryCollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        categoryCollectionViewFlowLayout.scrollDirection = .horizontal
-        categoryCollectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
-        self.categoryCollectionView.setCollectionViewLayout(categoryCollectionViewFlowLayout, animated: false)
-        self.categoryCollectionView.showsHorizontalScrollIndicator = false
-        self.categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.categoryCollectionView.backgroundColor = .clear
-        self.categoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identefier)
-        self.categoryCollectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: HeaderCollectionReusableView.identefier)
-        self.categoryCollectionView.dataSource = self
-        self.categoryCollectionView.delegate = self
-        //self.view.addSubview(categoryCollectionView)
-        
-        let mealCollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        mealCollectionViewFlowLayout.scrollDirection = .horizontal
-        mealCollectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
-        self.mealCollectionView.setCollectionViewLayout(mealCollectionViewFlowLayout, animated: false)
-        self.mealCollectionView.showsHorizontalScrollIndicator = false
-        self.mealCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.mealCollectionView.backgroundColor = .clear
-        self.mealCollectionView.register(RecommendedMealCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedMealCollectionViewCell.identefier)
-        self.mealCollectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: HeaderCollectionReusableView.identefier)
-        self.mealCollectionView.dataSource = self
-        self.mealCollectionView.delegate = self
-        //self.view.addSubview(mealCollectionView)
-    
-        
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.backgroundColor = .clear
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -125,14 +97,6 @@ final class HomeViewController:UIViewController {
             topLabel.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 40),
             topLabel.leftAnchor.constraint(equalTo: menuButton.leftAnchor),
             topLabel.widthAnchor.constraint(equalToConstant: 250),
-//            categoryCollectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
-//            categoryCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-//            categoryCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
-//            categoryCollectionView.heightAnchor.constraint(equalToConstant: 200),
-//            mealCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor),
-//            mealCollectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
-//            mealCollectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-//            mealCollectionView.bottomAnchor.constraint(equalTo:  self.view.safeAreaLayoutGuide.bottomAnchor)
             collectionView.topAnchor.constraint(equalTo: topLabel.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
@@ -155,7 +119,7 @@ final class HomeViewController:UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(0.85))
          
          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 0)
+        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 15)
          
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.35))
          
@@ -163,7 +127,7 @@ final class HomeViewController:UIViewController {
         group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         
          let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 0, leading: 15, bottom: 20, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 0, bottom: 20, trailing: 0)
          section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: categoryHeaderId, alignment: .topLeading)]
          return section
@@ -196,15 +160,12 @@ final class HomeViewController:UIViewController {
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
                 self?.collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-//                self?.categoryCollectionView.reloadData()
-//                self?.categoryCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
             }
             
         }
         self.viewModel.reloadMealsCollectionView = {[weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadSections(IndexSet(integer:1))
-                //self?.mealCollectionView.reloadData()
             }
         }
     }
@@ -222,8 +183,7 @@ final class HomeViewController:UIViewController {
 extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
-        //return self.viewModel.numberOfSections()
+        return self.viewModel.numberOfSections()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -234,15 +194,6 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         default:
             return self.viewModel.recommendedMealCellViewModels.count
         }
-        
-//        switch collectionView {
-//        case categoryCollectionView:
-//            return self.viewModel.categoryCellViewModels.count
-//        case mealCollectionView:
-//            return self.viewModel.recommendedMealCellViewModels.count
-//        default:
-//            return 0
-//        }
     }
     
     
@@ -255,27 +206,7 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         default:
             return self.viewModel.setupMealCell(collectionView: collectionView, cellForItemAt: indexPath)
         }
-        
-//        switch collectionView {
-//        case categoryCollectionView:
-//            return self.viewModel.setupCategoryCell(collectionView: collectionView, cellForItemAt: indexPath)
-//        case mealCollectionView:
-//            return self.viewModel.setupMealCell(collectionView: collectionView, cellForItemAt: indexPath)
-//        default:
-//            return UICollectionViewCell()
-//        }
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////        switch collectionView {
-////        case categoryCollectionView:
-////            return self.viewModel.setupCategoryCellSize()
-////        case mealCollectionView:
-////            return self.viewModel.setupMealCellSize()
-////        default:
-////            return CGSize()
-////        }
-//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -285,15 +216,6 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         default:
             break
         }
-        
-//        switch collectionView {
-//        case categoryCollectionView:
-//            self.viewModel.didSelectCategoryItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
-//        case mealCollectionView:
-//            self.viewModel.didSelectMealItemAt(collectionView: collectionView, didSelectItemAt: indexPath)
-//        default:
-//            break
-//        }
   }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -308,21 +230,6 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
             header.configurateHeader(title: "Most Recommended")
             return header
         }
-        
-        
-        
-//            switch collectionView {
-//            case categoryCollectionView:
-//                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identefier, for: indexPath) as? HeaderCollectionReusableView else {return UICollectionReusableView()}
-//                header.configurateHeader(title: "Categoroies")
-//                return header
-//            case mealCollectionView:
-//                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identefier, for: indexPath) as? HeaderCollectionReusableView else {return UICollectionReusableView()}
-//                header.configurateHeader(title: "Most Recommended")
-//                return header
-//            default:
-//                return UICollectionReusableView()
-//            }
     }
     
     

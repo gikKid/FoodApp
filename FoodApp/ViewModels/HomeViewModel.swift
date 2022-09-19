@@ -27,7 +27,7 @@ final class HomeViewModel: NSObject {
     
     //MARK: - Category collection UI setup
     public func numberOfSections() -> Int {
-        1
+        2
     }
     
     public func didSelectCategoryItemAt(collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
