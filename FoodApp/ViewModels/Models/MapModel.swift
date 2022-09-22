@@ -28,8 +28,9 @@ struct Position: Decodable {
 // MARK: - Address
 struct Address: Decodable {
     let label: String
-    let street, postalCode: String
+    let postalCode: String?
     let houseNumber:String?
+    let street:String?
 }
 
 
@@ -40,7 +41,7 @@ struct CategoryPlace: Decodable {
 
 // MARK: - Contact
 struct Contact: Decodable {
-    let phone: [Email]
+    let phone: [Email]?
     let www, fax, email, tollFree: [Email]?
 }
 

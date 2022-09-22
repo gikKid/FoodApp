@@ -27,6 +27,7 @@
 		5436481F28DCA3FF002994A1 /* ApiRestarauntsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436481E28DCA3FF002994A1 /* ApiRestarauntsRequest.swift */; };
 		5445118928D3ABBD00F2BCB1 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5445118828D3ABBD00F2BCB1 /* ImageRequest.swift */; };
 		546ED46D28DCD0C50094DF21 /* Private.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED46C28DCD0C50094DF21 /* Private.swift */; };
+		546ED46F28DCE2520094DF21 /* RestarauntAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED46E28DCE2520094DF21 /* RestarauntAnnotation.swift */; };
 		547BCE2A28DBBAA4008A84BF /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BCE2928DBBAA4008A84BF /* MapViewModel.swift */; };
 		54A33F6528D5D78500CBD864 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A33F6428D5D78500CBD864 /* HeaderCollectionReusableView.swift */; };
 		54AAD03728D3988A0006FA95 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAD03628D3988A0006FA95 /* Constant.swift */; };
@@ -62,6 +63,7 @@
 		5436481E28DCA3FF002994A1 /* ApiRestarauntsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRestarauntsRequest.swift; sourceTree = "<group>"; };
 		5445118828D3ABBD00F2BCB1 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
 		546ED46C28DCD0C50094DF21 /* Private.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Private.swift; sourceTree = "<group>"; };
+		546ED46E28DCE2520094DF21 /* RestarauntAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestarauntAnnotation.swift; sourceTree = "<group>"; };
 		547BCE2928DBBAA4008A84BF /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		54A33F6428D5D78500CBD864 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		54AAD03628D3988A0006FA95 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				54AAFFF128D4BF6F000A3E0D /* MealResource.swift */,
 				542FF73C28D2864100CE8486 /* HomeModel.swift */,
 				5436481A28DC8D29002994A1 /* MapModel.swift */,
+				546ED46E28DCE2520094DF21 /* RestarauntAnnotation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				542FF74528D2876700CE8486 /* HomeViewController.swift in Sources */,
 				5433F01A28DC64C500A01ACC /* MKMapView + Extension.swift in Sources */,
 				542FF74728D287F000CE8486 /* FavoriteViewController.swift in Sources */,
+				546ED46F28DCE2520094DF21 /* RestarauntAnnotation.swift in Sources */,
 				542FF75B28D28E1E00CE8486 /* HomeViewModel.swift in Sources */,
 				542FF73D28D2864100CE8486 /* HomeModel.swift in Sources */,
 				54AAFFF028D4BF35000A3E0D /* ApiMealRequest.swift in Sources */,

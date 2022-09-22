@@ -27,6 +27,7 @@ final class MapViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        mapView.showsUserLocation = true
     }
     
     
@@ -36,6 +37,7 @@ final class MapViewController: UIViewController {
     private func setupView() {
         self.view.addSubview(mapView)
         self.view.backgroundColor = .secondarySystemBackground
+        
         
         
         let addAddressButton:UIButton = {
@@ -84,12 +86,25 @@ extension MapViewController:CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        present(errorAC(message: "\(error)"),animated: true)
+        present(errorAC(message: "Im sorry, something went wrong, please restart application or rechecked your location settings"),animated: true)
+        print(error.localizedDescription)
     }
 }
 
 
 //MARK: - MKMapViewDelegate
 extension MapViewController:MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? { // called for every annotation which was added to map
+        self.viewModel.setupAnnotationView(annotation: annotation)
+        
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let restaraunt = view.annotation as? RestarauntAnnotation else {return}
+        print("test")
 
+
+    }
+    
 }
