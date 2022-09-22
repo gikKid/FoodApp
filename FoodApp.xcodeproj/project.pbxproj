@@ -20,7 +20,10 @@
 		542FF74B28D2880500CE8486 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF74A28D2880500CE8486 /* CartViewController.swift */; };
 		542FF75828D28C4100CE8486 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF75728D28C4000CE8486 /* NetworkRequest.swift */; };
 		542FF75B28D28E1E00CE8486 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FF75A28D28E1E00CE8486 /* HomeViewModel.swift */; };
+		5433F01A28DC64C500A01ACC /* MKMapView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5433F01928DC64C500A01ACC /* MKMapView + Extension.swift */; };
+		5433F01C28DC64ED00A01ACC /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5433F01B28DC64ED00A01ACC /* GlobalFunctions.swift */; };
 		5445118928D3ABBD00F2BCB1 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5445118828D3ABBD00F2BCB1 /* ImageRequest.swift */; };
+		547BCE2A28DBBAA4008A84BF /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BCE2928DBBAA4008A84BF /* MapViewModel.swift */; };
 		54A33F6528D5D78500CBD864 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A33F6428D5D78500CBD864 /* HeaderCollectionReusableView.swift */; };
 		54AAD03728D3988A0006FA95 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAD03628D3988A0006FA95 /* Constant.swift */; };
 		54AAD03928D39A7D0006FA95 /* CategoryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AAD03828D39A7D0006FA95 /* CategoryResource.swift */; };
@@ -48,7 +51,10 @@
 		542FF74A28D2880500CE8486 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		542FF75728D28C4000CE8486 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		542FF75A28D28E1E00CE8486 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5433F01928DC64C500A01ACC /* MKMapView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView + Extension.swift"; sourceTree = "<group>"; };
+		5433F01B28DC64ED00A01ACC /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		5445118828D3ABBD00F2BCB1 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
+		547BCE2928DBBAA4008A84BF /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		54A33F6428D5D78500CBD864 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		54AAD03628D3988A0006FA95 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		54AAD03828D39A7D0006FA95 /* CategoryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResource.swift; sourceTree = "<group>"; };
@@ -92,7 +98,6 @@
 			children = (
 				542FF74C28D2883400CE8486 /* Views */,
 				542FF75928D28E0200CE8486 /* ViewModels */,
-				542FF75128D288A700CE8486 /* Models */,
 				542FF75628D28BE200CE8486 /* Services */,
 				542FF75228D288B800CE8486 /* Helper */,
 				542FF75328D288CE00CE8486 /* App */,
@@ -165,6 +170,8 @@
 			children = (
 				542FF74028D2872200CE8486 /* AppCoordinator.swift */,
 				54AAD03628D3988A0006FA95 /* Constant.swift */,
+				5433F01928DC64C500A01ACC /* MKMapView + Extension.swift */,
+				5433F01B28DC64ED00A01ACC /* GlobalFunctions.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -193,7 +200,9 @@
 		542FF75928D28E0200CE8486 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				547BCE2928DBBAA4008A84BF /* MapViewModel.swift */,
 				542FF75A28D28E1E00CE8486 /* HomeViewModel.swift */,
+				542FF75128D288A700CE8486 /* Models */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -270,6 +279,7 @@
 			files = (
 				542FF75828D28C4100CE8486 /* NetworkRequest.swift in Sources */,
 				542FF74128D2872200CE8486 /* AppCoordinator.swift in Sources */,
+				5433F01C28DC64ED00A01ACC /* GlobalFunctions.swift in Sources */,
 				54AAD03728D3988A0006FA95 /* Constant.swift in Sources */,
 				542FF74328D2874A00CE8486 /* RootTabBarController.swift in Sources */,
 				542FF74928D287FC00CE8486 /* MapViewController.swift in Sources */,
@@ -277,6 +287,7 @@
 				54AAD03928D39A7D0006FA95 /* CategoryResource.swift in Sources */,
 				54A33F6528D5D78500CBD864 /* HeaderCollectionReusableView.swift in Sources */,
 				542FF74528D2876700CE8486 /* HomeViewController.swift in Sources */,
+				5433F01A28DC64C500A01ACC /* MKMapView + Extension.swift in Sources */,
 				542FF74728D287F000CE8486 /* FavoriteViewController.swift in Sources */,
 				542FF75B28D28E1E00CE8486 /* HomeViewModel.swift in Sources */,
 				542FF73D28D2864100CE8486 /* HomeModel.swift in Sources */,
@@ -285,6 +296,7 @@
 				542FF72928D285D500CE8486 /* AppDelegate.swift in Sources */,
 				54E5BAD128D3A29300ADFAF7 /* ApiCategoriesRequest.swift in Sources */,
 				54AAFFF228D4BF6F000A3E0D /* MealResource.swift in Sources */,
+				547BCE2A28DBBAA4008A84BF /* MapViewModel.swift in Sources */,
 				54AAFFF428D4F351000A3E0D /* RecommendedMealCollectionViewCell.swift in Sources */,
 				54DD221628D293980014A26D /* CategoryCollectionViewCell.swift in Sources */,
 				54AAD03B28D39B200006FA95 /* ApiResource.swift in Sources */,
