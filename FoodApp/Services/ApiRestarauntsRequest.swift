@@ -23,7 +23,6 @@ extension ApiRestarauntsRequest:NetworkRequest {
     }
     
     func execute(withCompletion completion: @escaping ([Resource.ModelType]?, Error?) -> Void) {
-        print(resource.url)
         self.load(resource.url, withCompletion: completion)
     }
     

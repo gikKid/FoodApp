@@ -9,7 +9,7 @@ struct Restaraunts: Decodable {
 // MARK: - Restaraunt
 struct Restaraunt: Decodable {
     let title: String
-    let address: Address
+    let address: Address?
     let position: Position
     let distance: Int
     let categories: [CategoryPlace]
@@ -28,7 +28,8 @@ struct Position: Decodable {
 // MARK: - Address
 struct Address: Decodable {
     let label: String
-    let street, postalCode, houseNumber: String
+    let street, postalCode: String
+    let houseNumber:String?
 }
 
 
@@ -63,15 +64,10 @@ struct Payment: Decodable {
 
 // MARK: - Method
 struct Method: Decodable {
-    let id: ID
+    let id: String
 }
 
-enum ID: String, Decodable {
-    case amex = "amex"
-    case discover = "discover"
-    case mastercard = "mastercard"
-    case visa = "visa"
-}
+
 
 //MARK: - Wrapper
 

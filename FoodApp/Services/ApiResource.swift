@@ -20,6 +20,6 @@ protocol RestarauntsAPIResource {
 
 extension RestarauntsAPIResource {
     var url:URL{
-        return URL(string: "https://discover.search.hereapi.com/v1/discover?in=circle:\(coordinate.latitude),\(coordinate.longitude);r=150&q=restaraunts&apiKey=\(PrivateConstant.restarauntsAPIKey)")!
+        return URL(string: "https://discover.search.hereapi.com/v1/discover?in=circle:\(coordinate.latitude),\(coordinate.longitude);r=100000&q=restaraunts&apiKey=\(PrivateConstant.restarauntsAPIKey)")!
     }
 }
