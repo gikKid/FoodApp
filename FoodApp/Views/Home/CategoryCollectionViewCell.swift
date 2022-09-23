@@ -69,10 +69,25 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
             self.foodImageView.image = UIImage(systemName: Constant.failedImageName)
             return
         }
+        
+        if let image = ImageCache.shared[url] {
+            DispatchQueue.main.async {
+                self.foodImageView.image = image
+            }
+            return
+        }
+        
         let imageRequest = ImageRequest(url: url)
-        imageRequest.execute(withCompletion: {[weak self] image, error in
-            self?.foodImageView.image = image
-        })
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            imageRequest.execute(withCompletion: {[weak self] image, error in
+                DispatchQueue.main.async {
+                    ImageCache.shared[url] = image
+                    self?.foodImageView.image = image
+                }
+            })
+        }
+        
     }
     
 }

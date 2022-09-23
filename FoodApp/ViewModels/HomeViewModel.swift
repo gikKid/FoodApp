@@ -22,6 +22,7 @@ final class HomeViewModel: NSObject {
             reloadMealsCollectionView?()
         }
     }
+    //private let cache = ImageCache()
     
     
     

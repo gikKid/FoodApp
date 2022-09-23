@@ -12,6 +12,7 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
             self.fetchImage(urlString: urlString)
         }
     }
+    private let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +31,11 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
         mealImageView.layer.masksToBounds = true
         mealImageView.layer.cornerRadius = 12
         self.addSubview(mealImageView)
+        
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        mealImageView.addSubview(activityIndicator)
         
         let addCartButton = UIButton()
         addCartButton.backgroundColor = UIColor(named: Constant.orangeColorName)
@@ -50,7 +56,9 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
             addCartButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             addCartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
             addCartButton.widthAnchor.constraint(equalToConstant: addCartButton.frame.width + 40),
-            addCartButton.heightAnchor.constraint(equalToConstant: addCartButton.frame.width + 40)
+            addCartButton.heightAnchor.constraint(equalToConstant: addCartButton.frame.width + 40),
+            activityIndicator.centerXAnchor.constraint(equalTo: mealImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: mealImageView.centerYAnchor)
         ])
         
     }
@@ -65,10 +73,25 @@ class RecommendedMealCollectionViewCell: UICollectionViewCell {
             self.mealImageView.image = UIImage(systemName: Constant.failedImageName)
             return
         }
+        
+        if let image = ImageCache.shared[url] {
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.mealImageView.image = image
+            }
+            return
+        }
+        
         let imageRequest = ImageRequest(url: url)
-        imageRequest.execute(withCompletion: {[weak self] image, error in
-            self?.mealImageView.image = image
-        })
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            imageRequest.execute(withCompletion: {[weak self] image, error in
+                DispatchQueue.main.async {
+                    ImageCache.shared[url] = image
+                    self?.activityIndicator.stopAnimating()
+                    self?.mealImageView.image = image
+                }
+            })
+        }
     }
-    
 }
