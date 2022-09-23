@@ -101,10 +101,15 @@ extension MapViewController:MKMapViewDelegate {
     
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let restaraunt = view.annotation as? RestarauntAnnotation else {return}
-        print("test")
-
-
+        guard let restaraunt = view.annotation as? RestarauntAnnotation, let userLocation = locationManager.location?.coordinate else {return}
+        self.viewModel.createDirectionRequest(mapView: mapView, startCoordinate: userLocation, endCoordinate: restaraunt.coordinate)
     }
     
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = .red
+        renderer.lineWidth = 4.0
+        return renderer
+ }
 }

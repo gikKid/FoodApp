@@ -11,6 +11,39 @@ final class MapViewModel {
     }
     private var mapView_:MKMapView?
     
+    public func createDirectionRequest(mapView:MKMapView ,startCoordinate:CLLocationCoordinate2D, endCoordinate:CLLocationCoordinate2D)  {
+        
+        mapView.removeOverlays(mapView.overlays)
+        
+        let sourcePlacemark = MKPlacemark(coordinate: startCoordinate, addressDictionary: nil)
+        let destinationPlacemark = MKPlacemark(coordinate: endCoordinate, addressDictionary: nil)
+        
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.transportType = .walking
+        
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate {
+          (response, error) -> Void in
+          
+          guard let response = response else {
+            if let error = error {
+              print("Error: \(error)")
+            }
+            return
+          }
+          let route = response.routes[0]
+            mapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
+          
+          let rect = route.polyline.boundingMapRect
+            mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+        }
+    }
+    
     public func didUpdateLocations(locations:[CLLocation],mapView:MKMapView) {
         guard let location = locations.first else {return}
         mapView.centerToLocation(location)
