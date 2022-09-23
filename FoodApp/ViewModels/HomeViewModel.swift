@@ -6,6 +6,9 @@ struct CellViewModel {
     var image:String
 }
 
+protocol HomeViewModelProtocol {
+    func passError(message:String)
+}
 
 final class HomeViewModel: NSObject {
     var reloadCetegoryCollectionView: (() -> Void)?
@@ -22,8 +25,7 @@ final class HomeViewModel: NSObject {
             reloadMealsCollectionView?()
         }
     }
-    //private let cache = ImageCache()
-    
+    var delegate:HomeViewModelProtocol?
     
     
     //MARK: - Category collection UI setup
@@ -42,9 +44,7 @@ final class HomeViewModel: NSObject {
     }
     
     public func setupCategoryCell(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identefier, for: indexPath) as? CategoryCollectionViewCell else {
-            fatalError()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identefier, for: indexPath) as? CategoryCollectionViewCell else {return UICollectionViewCell()}
         let cellViewModel = self.getCategoryCellViewModel(at: indexPath)
         cell.cellViewModel = cellViewModel
         return cell
@@ -70,6 +70,10 @@ final class HomeViewModel: NSObject {
         
         let  apiRequest = ApiCategoriesRequest(resource: categoryResource)
         apiRequest.execute(withCompletion: {[weak self] (categories,error) in
+            if let error = error {
+                self?.delegate?.passError(message: "Network error: \(error)")
+                return
+            }
             guard let categories = categories else {return}
             self?.fetchCategoriesData(categories: categories)
         })
@@ -80,9 +84,13 @@ final class HomeViewModel: NSObject {
         let mealResource = MealResource(meal: meal)
         
         let apiRequest = ApiMealRequest(resource: mealResource)
-        apiRequest.execute(withCompletion: { meals, error in
+        apiRequest.execute(withCompletion: {[weak self] meals, error in
+            if let error = error {
+                self?.delegate?.passError(message: "Network error: \(error)")
+                return
+            }
             guard let meals = meals else {return}
-            self.fetchMealsData(meals: meals)
+            self?.fetchMealsData(meals: meals)
         })
     }
     

@@ -86,7 +86,7 @@ extension MapViewController:CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        present(errorAC(message: "Im sorry, something went wrong, please restart application or rechecked your location settings"),animated: true)
+        present(errorAC(message: "Im sorry, something went wrong, please restart application or check your location settings"),animated: true)
         print(error.localizedDescription)
     }
 }
@@ -107,9 +107,14 @@ extension MapViewController:MKMapViewDelegate {
     
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = .red
-        renderer.lineWidth = 4.0
-        return renderer
+        self.viewModel.createOverlayRenderer(overlay: overlay)
  }
+}
+
+
+//MARK: - MapViewModelProtocol
+extension MapViewController:MapViewModelProtocol {
+    func passError(message: String) {
+        present(errorAC(message: message),animated: true)
+    }
 }

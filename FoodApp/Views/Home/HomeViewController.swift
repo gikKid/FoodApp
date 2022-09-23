@@ -232,8 +232,12 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
             return header
         }
     }
-    
-    
-    
+}
+
+//MARK: - HomeViewModelDelegate
+extension HomeViewController:HomeViewModelProtocol {
+    func passError(message: String) {
+        present(errorAC(message: message),animated: true)
+    }
 }
 

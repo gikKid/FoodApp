@@ -1,6 +1,10 @@
 import Foundation
 import MapKit
 
+protocol MapViewModelProtocol {
+    func passError(message:String)
+}
+
 final class MapViewModel {
     
     public var restaraunts = [Restaraunt](){
@@ -10,6 +14,7 @@ final class MapViewModel {
         }
     }
     private var mapView_:MKMapView?
+    public var delegate:MapViewModelProtocol?
     
     public func createDirectionRequest(mapView:MKMapView ,startCoordinate:CLLocationCoordinate2D, endCoordinate:CLLocationCoordinate2D)  {
         
@@ -32,7 +37,7 @@ final class MapViewModel {
           
           guard let response = response else {
             if let error = error {
-              print("Error: \(error)")
+                self.delegate?.passError(message: "Error: \(error)")
             }
             return
           }
@@ -61,6 +66,10 @@ final class MapViewModel {
         
         let apiRequest = ApiRestarauntsRequest(resource: restarauntsResource)
         apiRequest.execute(withCompletion: { [weak self] (restaraunts,error) in
+            if let error = error {
+                self?.delegate?.passError(message: "Network fail: \(error)")
+                return
+            }
             guard let restaraunts = restaraunts else {return}
             self?.restaraunts = restaraunts // Cache data
         })
@@ -102,6 +111,13 @@ final class MapViewModel {
         """
         view.detailCalloutAccessoryView = detailLabel
         return view
+    }
+    
+    public func createOverlayRenderer(overlay:MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = .red
+        renderer.lineWidth = 4.0
+        return renderer
     }
     
     
